@@ -10,22 +10,34 @@
 </template>
 
 <script>
-import { api } from '@/services.js'
+import { api } from '@/services'
+import { serialize } from '@/helpers'
 
 export default {
     name: "ProductsList",
     data(){
         return {
-            products: null
+            products: null,
+            productsForPage: 9
+        }
+    },
+    computed: {
+        url() {
+            const query = serialize(this.$route.query)
+            return `/produto?_limite=${this.productsForPage}${query}`
         }
     },
     methods: {
         getProducts() {
-            api.get("/produto")
-            .then(response => {
+            api.get(this.url).then(response => {
                 this.products = response.data;
             });
             
+        }
+    },
+    watch: {
+        url(){
+            this.getProducts();
         }
     },
     created() {
