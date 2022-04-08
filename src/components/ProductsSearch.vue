@@ -22,5 +22,8 @@ export default {
 </script>
 
 <style>
-    
+    form{
+        margin: 2rem auto;
+        text-align: center;
+    }
 </style>
